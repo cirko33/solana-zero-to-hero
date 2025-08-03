@@ -133,6 +133,6 @@ describe("TEST", () => {
       .rpc();
 
     const balance = await provider.connection.getBalance(to);
-    assert.equal(balance, 5*web3.LAMPORTS_PER_SOL+1000);
+    assert.equal(balance, 5 * web3.LAMPORTS_PER_SOL + 1000);
   });
 });
