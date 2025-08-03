@@ -97,7 +97,6 @@ pub struct ProposeSwap<'info> {
         bump,
     )]
     pub swap: Account<'info, Swap>,
-
     pub system_program: Program<'info, System>,
 }
 
@@ -114,7 +113,6 @@ pub struct AcceptSwap<'info> {
         constraint = swap.accepter == accepter.key()
     )]
     pub accepter: Signer<'info>,
-    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
@@ -125,7 +123,6 @@ pub struct AddToTreasury<'info> {
         constraint = signer.lamports() >= amount @ SwapError::InsufficientFunds
     )]
     pub signer: Signer<'info>,
-
     #[account(
         init_if_needed,
         payer=signer,
@@ -134,7 +131,6 @@ pub struct AddToTreasury<'info> {
         bump
     )]
     pub treasury: Account<'info, Treasury>,
-
     pub system_program: Program<'info, System>
 }
 
@@ -158,7 +154,6 @@ pub struct ExecuteSwap<'info> {
         bump
     )]
     pub accepter_treasury: Account<'info, Treasury>,
-
     #[account(mut)]
     pub signer: Signer<'info>
 }
@@ -175,8 +170,4 @@ pub enum SwapError {
     SwapAlreadyExecuted,
     #[msg("Insufficient funds for swap")]
     InsufficientFunds,
-    #[msg("Swap already exists")]
-    SwapAlreadyExists,
-    #[msg("Swap not found")]
-    SwapNotFound
 }

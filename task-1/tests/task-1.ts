@@ -55,7 +55,6 @@ describe("task-1", () => {
       .signers([accepter])
       .rpc()
 
-    console.log("DOSO");
     await program.methods
       .addToTreasury(new anchor.BN(1000))
       .accounts({
@@ -65,7 +64,6 @@ describe("task-1", () => {
       .signers([proposer])
       .rpc()
 
-    console.log("DOSO");
     await program.methods
       .addToTreasury(new anchor.BN(2000))
       .accounts({
@@ -75,14 +73,12 @@ describe("task-1", () => {
       .signers([accepter])
       .rpc()
 
-    console.log("DOSO");
     await program.methods.executeSwap().accounts({
       swap: swapAddr,
       proposerTreasury: createTreasuryPDA(proposer.publicKey),
       accepterTreasury: createTreasuryPDA(accepter.publicKey),
     }).rpc()
 
-    console.log("DOSO");
     const swaps = await program.account.swap.all()
     console.log(swaps)
     assert.equal(swaps.length, 1)
@@ -90,12 +86,5 @@ describe("task-1", () => {
     const thatSwap = swaps[0].account;
     assert.isTrue(thatSwap.accepted)
     assert.isTrue(thatSwap.executed)
-
-    const treasuries = await program.account.treasury.all()
-
-    treasuries.forEach(async (t) => {
-      const state = await provider.connection.getBalance(t.publicKey)
-      console.log(t.publicKey, state)
-    })
   })
 });
